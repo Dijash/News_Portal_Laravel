@@ -40,7 +40,7 @@
             <span>Analytics</span>
         </a>
         
-        <a href="#"
+          <a href="{{ route('admin.settings') }}"
            class="flex items-center gap-3 px-4 py-2 rounded-lg transition
                   {{ Request::is('admin/settings') 
                      ? 'bg-red-100 dark:bg-red-900/20 text-red-600 dark:text-red-400 font-semibold' 

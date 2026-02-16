@@ -26,6 +26,9 @@ Route::middleware('admin')->group(function () {
     Route::delete('/admin/users/{id}', [AdminController::class, 'deleteUser'])->name('users.destroy');
     Route::patch('/admin/users/{id}/status', [AdminController::class, 'toggleUserStatus'])->name('users.toggleStatus');
     Route::get('/admin/analytics', [AdminController::class, 'analytics'])->name('admin.analytics');
+    Route::get('/admin/settings', [AdminController::class, 'settings'])->name('admin.settings');
+    Route::patch('/admin/settings/profile', [AdminController::class, 'updateProfile'])->name('admin.settings.profile');
+    Route::patch('/admin/settings/password', [AdminController::class, 'updatePassword'])->name('admin.settings.password');
 });
 
 Route::get('/login', [AuthController::class, 'login'])->name('login');

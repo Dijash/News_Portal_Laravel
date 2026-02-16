@@ -33,10 +33,27 @@
         </form>
       </div>
       <div class="flex gap-3">
-        <a href="{{ route('login') }}" class="px-4 py-2 border border-red-600 text-red-600 rounded-lg hover:bg-red-50 font-medium">Login</a>
-        <a href="{{ route('register') }}" class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 font-medium">Sign Up</a>
+        @auth
+          <form method="POST" action="{{ route('logout') }}">
+            @csrf
+            <button type="submit" class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 font-medium">
+              Logout
+            </button>
+          </form>
+        @endauth
+        @guest
+          <a href="{{ route('login') }}" class="px-4 py-2 border border-red-600 text-red-600 rounded-lg hover:bg-red-50 font-medium">Login</a>
+          <a href="{{ route('register') }}" class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 font-medium">Sign Up</a>
+        @endguest
       </div>
 
     </div>
   </div>
 </nav>
+@auth
+  <div class="bg-white border-t">
+    <div class="max-w-7xl mx-auto px-4 py-2 text-sm text-gray-600">
+      Logged in as <span class="font-semibold text-gray-900">{{ auth()->user()->name }}</span>
+    </div>
+  </div>
+@endauth

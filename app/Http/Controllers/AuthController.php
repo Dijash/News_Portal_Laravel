@@ -27,9 +27,9 @@ class AuthController extends Controller
                 ]);
             }
 
-            if (auth()->attempt($credentials)) {
+            if (Auth::attempt($credentials)) {
                 $request->session()->regenerate();
-                return redirect()->intended(route('admin.dashboard'));
+                return redirect()->intended(route('home'));
             }
 
             return back()->withErrors([
@@ -38,7 +38,7 @@ class AuthController extends Controller
         }
         public function logout(Request $request)
         {
-            auth()->logout();
+            Auth::logout();
             $request->session()->invalidate();
             $request->session()->regenerateToken();
             return redirect()->route('home');
