@@ -1,4 +1,3 @@
-
 @extends('Layouts.adminApp')
 
 @section('adminContent')
@@ -45,6 +44,7 @@
                 <label class="block text-sm font-medium mb-1">Featured Image</label>
                 <input 
                     type="file"
+                    id="imageInput"
                     name="image"
                     accept="image/*"
                     class="w-full text-sm text-gray-600 dark:text-gray-400
@@ -53,6 +53,12 @@
                     file:bg-red-50 file:text-red-600
                     hover:file:bg-red-100
                     dark:file:bg-gray-800 dark:file:text-red-400">
+            </div>
+
+            <!-- Image Preview -->
+            <div id="imagePreview" class="hidden">
+                <label class="block text-sm font-medium mb-2">Preview</label>
+                <img id="previewImg" src="" alt="Preview" class="max-w-xs rounded-lg border border-gray-300 dark:border-gray-700">
             </div>
             
             <!-- News Source URL -->
@@ -106,4 +112,23 @@
 
     </div>
 </main>
+
+<script>
+    document.getElementById('imageInput').addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        const preview = document.getElementById('imagePreview');
+        const previewImg = document.getElementById('previewImg');
+        
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                previewImg.src = event.target.result;
+                preview.classList.remove('hidden');
+            };
+            reader.readAsDataURL(file);
+        } else {
+            preview.classList.add('hidden');
+        }
+    });
+</script>
 @endsection

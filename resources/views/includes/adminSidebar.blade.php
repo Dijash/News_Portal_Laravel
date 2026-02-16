@@ -22,16 +22,16 @@
             <span>News Info</span>
         </a>
         
-        <a href="#"
+        <a href="{{ route('admin.manageUsers') }}"
            class="flex items-center gap-3 px-4 py-2 rounded-lg transition
-                  {{ Request::is('admin/categories') 
+                  {{ Request::is('admin/manage-users') 
                      ? 'bg-red-100 dark:bg-red-900/20 text-red-600 dark:text-red-400 font-semibold' 
                      : 'hover:bg-gray-100 dark:hover:bg-gray-800' }}">
             <span class="text-lg">🗂️</span>
-            <span>Categories</span>
+            <span>Manage Users</span>
         </a>
         
-        <a href="#"
+          <a href="{{ route('admin.analytics') }}"
            class="flex items-center gap-3 px-4 py-2 rounded-lg transition
                   {{ Request::is('admin/analytics') 
                      ? 'bg-red-100 dark:bg-red-900/20 text-red-600 dark:text-red-400 font-semibold' 

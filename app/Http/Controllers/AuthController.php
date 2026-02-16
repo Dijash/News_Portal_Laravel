@@ -20,6 +20,13 @@ class AuthController extends Controller
                 'password' => ['required'],
             ]);
 
+            $user = User::where('email', $credentials['email'])->first();
+            if ($user && !$user->is_active) {
+                return back()->withErrors([
+                    'email' => 'Your account is inactive. Please contact support.',
+                ]);
+            }
+
             if (auth()->attempt($credentials)) {
                 $request->session()->regenerate();
                 return redirect()->intended(route('admin.dashboard'));

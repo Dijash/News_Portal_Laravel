@@ -39,4 +39,17 @@ class HomeController extends Controller
         $news = News::where('category', 'entertainment')->latest()->get();
         return view('entertainment', compact('news'));
     }
+    
+    public function search(Request $request)
+    {
+        $query = $request->input('query');
+        
+        $news = News::where('title', 'LIKE', "%{$query}%")
+            ->orWhere('content', 'LIKE', "%{$query}%")
+            ->orWhere('author', 'LIKE', "%{$query}%")
+            ->latest()
+            ->get();
+        
+        return view('search', compact('news', 'query'));
+    }
 }

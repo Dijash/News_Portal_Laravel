@@ -19,14 +19,22 @@
 
       <!-- Search -->
       <div class="hidden md:block">
-        <input 
-          type="text" 
-          placeholder="Search news..."
-          class="border rounded-lg px-3 py-1 focus:outline-none focus:ring-2 focus:ring-red-500"
-        >
+        <form action="{{ route('search') }}" method="GET" class="flex">
+          <input 
+        type="text" 
+        name="query"
+        placeholder="Search news..."
+        class="border rounded-lg px-3 py-1 focus:outline-none focus:ring-2 focus:ring-red-500"
+        required
+          >
+          <button type="submit" class="ml-2 px-4 py-1 bg-red-600 text-white rounded-lg hover:bg-red-700">
+        Search
+          </button>
+        </form>
       </div>
-      <div>
-        <a href="{{ route('login') }}" class="text-red-600 hover:text-red-700 font-medium">Login</a>
+      <div class="flex gap-3">
+        <a href="{{ route('login') }}" class="px-4 py-2 border border-red-600 text-red-600 rounded-lg hover:bg-red-50 font-medium">Login</a>
+        <a href="{{ route('register') }}" class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 font-medium">Sign Up</a>
       </div>
 
     </div>

@@ -6,6 +6,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/search', [HomeController::class, 'search'])->name('search');
 Route::get('/politics', [HomeController::class, 'politics'])->name('politics');
 Route::get('/business', [HomeController::class, 'business'])->name('business');
 Route::get('/sports', [HomeController::class, 'sports'])->name('sports');
@@ -20,6 +21,11 @@ Route::middleware('admin')->group(function () {
     Route::get('/admin/news/{id}/edit', [AdminController::class, 'editNews'])->name('admin.editNews');
     Route::put('/admin/news/{id}', [AdminController::class, 'updateNews'])->name('admin.news.update');
     Route::delete('/admin/news/{id}', [AdminController::class, 'deleteNews'])->name('admin.news.delete');
+    Route::get('/admin/manage-users', [AdminController::class, 'manageUsers'])->name('admin.manageUsers');
+    Route::get('/admin/users/{id}', [AdminController::class, 'showUser'])->name('users.show');
+    Route::delete('/admin/users/{id}', [AdminController::class, 'deleteUser'])->name('users.destroy');
+    Route::patch('/admin/users/{id}/status', [AdminController::class, 'toggleUserStatus'])->name('users.toggleStatus');
+    Route::get('/admin/analytics', [AdminController::class, 'analytics'])->name('admin.analytics');
 });
 
 Route::get('/login', [AuthController::class, 'login'])->name('login');

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Models\News;
+use App\Models\User;
 
 class AdminController extends Controller
 {
@@ -105,5 +106,114 @@ class AdminController extends Controller
             }
             $news->update($validated);
             return redirect()->route('admin.newsView')->with('success', 'News updated successfully!');
+        }
+        public function manageUsers()
+        {
+            // Fetch all users from the database with pagination
+            $users = User::latest()->paginate(10);
+            return view('Dashboard.manageUsers', compact('users'));
+        }
+
+        public function toggleUserStatus($id)
+        {
+            $user = User::findOrFail($id);
+
+            if ($user->id === Auth::id()) {
+                return redirect()->route('admin.manageUsers')->with('error', 'You cannot deactivate your own account.');
+            }
+
+            $user->is_active = !$user->is_active;
+            $user->save();
+
+            $message = $user->is_active ? 'User activated successfully!' : 'User deactivated successfully!';
+
+            return redirect()->route('admin.manageUsers')->with('success', $message);
+        }
+        
+        public function showUser($id)
+        {
+            $user = User::findOrFail($id);
+            return view('Dashboard.showUser', compact('user'));
+        }
+        
+        public function deleteUser($id)
+        {
+            $user = User::findOrFail($id);
+            
+            // Prevent deleting yourself
+            if ($user->id === Auth::id()) {
+                return redirect()->route('admin.manageUsers')->with('error', 'You cannot delete your own account!');
+            }
+            
+            $user->delete();
+            return redirect()->route('admin.manageUsers')->with('success', 'User deleted successfully!');
+        }
+        public function analytics()
+        {
+            $totalNews = News::count();
+            $totalUsers = User::count();
+            $publishedNews = News::whereNotNull('published_at')->count();
+            $draftNews = max($totalNews - $publishedNews, 0);
+
+            $newsByDate = News::selectRaw('DATE(published_at) as date, count(*) as count')
+                ->whereNotNull('published_at')
+                ->groupBy('date')
+                ->orderBy('date')
+                ->get();
+
+            $newsLabels = $newsByDate->pluck('date')->map(fn ($date) => (string) $date)->toArray();
+            $newsData = $newsByDate->pluck('count')->toArray();
+
+            $usersByDate = User::selectRaw('DATE(created_at) as date, count(*) as count')
+                ->groupBy('date')
+                ->orderBy('date')
+                ->get();
+
+            $userLabels = $usersByDate->pluck('date')->map(fn ($date) => (string) $date)->toArray();
+            $userData = $usersByDate->pluck('count')->toArray();
+
+            $categoryRows = News::select('category', DB::raw('count(*) as count'))
+                ->groupBy('category')
+                ->orderBy('category')
+                ->get();
+
+            $categoryLabels = $categoryRows->pluck('category')->toArray();
+            $categoryData = $categoryRows->pluck('count')->toArray();
+
+            $activeUsers = User::where('is_active', true)->count();
+            $inactiveUsers = User::where('is_active', false)->count();
+
+            $statusLabels = ['Published', 'Draft'];
+            $statusData = [$publishedNews, $draftNews];
+
+            $rolesLabels = ['Users'];
+            $rolesData = [$totalUsers];
+
+            $newsStatusLabels = $statusLabels;
+            $newsStatusPieData = $statusData;
+
+            $activityLabels = ['Active', 'Inactive'];
+            $activityData = [$activeUsers, $inactiveUsers];
+
+            return view('Dashboard.analytics', compact(
+                'totalNews',
+                'totalUsers',
+                'publishedNews',
+                'activeUsers',
+                'newsLabels',
+                'newsData',
+                'userLabels',
+                'userData',
+                'categoryLabels',
+                'categoryData',
+                'statusLabels',
+                'statusData',
+                'rolesLabels',
+                'rolesData',
+                'newsStatusLabels',
+                'newsStatusPieData',
+                'activityLabels',
+                'activityData'
+            ));
         }
 }
