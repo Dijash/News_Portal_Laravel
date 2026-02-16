@@ -1,7 +1,7 @@
 @extends('Layouts.adminApp')
 
 @section('adminContent')
-<main class="flex-1 px-6 py-10 bg-gray-50 dark:bg-gray-950 min-h-screen">
+<main class="flex-1 px-4 sm:px-6 py-8 sm:py-10 bg-gray-50 dark:bg-gray-950 min-h-screen">
 
     <div class="max-w-5xl mx-auto space-y-8">
 
@@ -241,6 +241,18 @@
 .btn-purple:hover {
     transform: translateY(-2px);
     box-shadow: 0 10px 20px rgba(147,51,234,0.3);
+}
+
+@media (max-width: 640px) {
+    .settings-card {
+        padding: 20px;
+    }
+
+    .btn-primary,
+    .btn-purple {
+        width: 100%;
+        justify-content: center;
+    }
 }
 
 /* ================= ERRORS ================= */

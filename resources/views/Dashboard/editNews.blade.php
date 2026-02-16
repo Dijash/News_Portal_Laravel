@@ -1,8 +1,8 @@
 @extends('Layouts.adminApp')
 
 @section('adminContent')
-<main class="flex-1 px-6 py-8">
-    <div class="max-w-3xl mx-auto bg-white dark:bg-gray-900 rounded-xl shadow p-8">
+<main class="flex-1 px-4 sm:px-6 py-6 sm:py-8">
+    <div class="max-w-3xl mx-auto bg-white dark:bg-gray-900 rounded-xl shadow p-6 sm:p-8">
 
         <h2 class="text-2xl font-bold mb-6">Edit News</h2>
 
@@ -95,7 +95,7 @@
             </div>
 
             <!-- Buttons -->
-            <div class="flex justify-end gap-3 pt-4">
+            <div class="flex flex-col sm:flex-row justify-end gap-3 pt-4">
 
                 <!-- Cancel (Anchor styled like button) -->
                 <a href="{{ route('admin.newsView') }}"

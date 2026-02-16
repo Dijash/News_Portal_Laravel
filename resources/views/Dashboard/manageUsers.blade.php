@@ -1,11 +1,11 @@
 @extends('Layouts.adminApp')
 
 @section('adminContent')
-<main class="flex-1 px-6 py-8">
+<main class="flex-1 px-4 sm:px-6 py-6 sm:py-8">
     <div class="max-w-7xl mx-auto">
         <div class="bg-white dark:bg-gray-900 rounded-xl shadow p-8">
 
-            <div class="flex justify-between items-center mb-6">
+            <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 mb-6">
                 <h2 class="text-2xl font-bold">Manage Users</h2>
             </div>
 
@@ -22,7 +22,7 @@
             @endif
 
             <div class="overflow-x-auto">
-                <table class="w-full text-left">
+                <table class="min-w-[720px] w-full text-left">
                     <thead class="bg-gray-100 dark:bg-gray-800">
                         <tr>
                             <th class="px-4 py-3 font-semibold">ID</th>
@@ -52,7 +52,7 @@
                                 </td>
                                 <td class="px-4 py-3">{{ $user->created_at->format('M d, Y') }}</td>
                                 <td class="px-4 py-3">
-                                    <div class="flex gap-2">
+                                    <div class="flex flex-wrap gap-2">
                                         <a href="{{ route('users.show', $user->id) }}" class="px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700 text-sm">
                                             View
                                         </a>

@@ -1,7 +1,7 @@
 @extends('Layouts.app')
 
 @section('content')
-<main class="max-w-7xl mx-auto px-4 mt-6">
+<main class="max-w-7xl mx-auto px-4 sm:px-6 mt-4 sm:mt-6">
 
   <!-- Breaking News -->
   <section class="mb-8">
@@ -9,13 +9,13 @@
       Breaking News
     </h2>
 
-    <div class="grid md:grid-cols-3 gap-6">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
       
       <!-- Main Breaking (Max 1-2) -->
       @foreach($breakingNews->take(1) as $news)
-      <div class="md:col-span-2">
+            <div class="md:col-span-2">
         <img src="{{ $news->image ? asset('storage/' . $news->image) : 'https://picsum.photos/800/400' }}"
-             class="rounded-lg w-full h-64 object-cover">
+              class="rounded-lg w-full h-56 sm:h-64 object-cover">
 
         <h3 class="text-xl font-bold mt-3 hover:text-red-600 cursor-pointer">
           {{ $news->title }}
@@ -32,7 +32,7 @@
         @foreach($sideNews->take(4) as $news)
         <div class="flex gap-3">
           <img src="{{ $news->image ? asset('storage/' . $news->image) : 'https://picsum.photos/200/120' }}"
-               class="rounded w-32 h-20 object-cover">
+               class="rounded w-24 sm:w-32 h-16 sm:h-20 object-cover">
 
           <p class="font-semibold hover:text-red-600 cursor-pointer line-clamp-2">
             {{ $news->title }}
@@ -51,7 +51,7 @@
       Latest News
     </h2>
 
-    <div class="grid md:grid-cols-4 gap-6">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
       @foreach($newsList->take(4) as $news)
       <div class="bg-white shadow rounded-lg overflow-hidden">
         <img src="{{ $news->image ? asset('storage/' . $news->image) : 'https://picsum.photos/300/200' }}"

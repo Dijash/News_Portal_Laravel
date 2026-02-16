@@ -2,7 +2,7 @@
 @section('adminContent')
 <div class="flex-1 flex flex-col">
     <!-- Top Header -->
-    <header class="bg-white dark:bg-gray-900 shadow px-6 py-4 flex justify-between items-center">
+    <header class="bg-white dark:bg-gray-900 shadow px-4 sm:px-6 py-4 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
         <h1 class="text-xl font-bold">Dashboard</h1>
         <span class="text-sm text-gray-600 dark:text-gray-400">
             System Overview
@@ -10,7 +10,7 @@
     </header>
 
     <!-- Dashboard Content -->
-    <main class="flex-1 px-6 py-8 space-y-8">
+    <main class="flex-1 px-4 sm:px-6 py-6 sm:py-8 space-y-6 sm:space-y-8">
         <!-- Stats -->
         <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             <div class="bg-white dark:bg-gray-900 rounded-xl shadow p-6">

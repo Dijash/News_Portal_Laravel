@@ -3,7 +3,7 @@
 @section('content')
 <div class="container mx-auto px-4 py-8">
     <div class="mb-8">
-        <h1 class="text-4xl font-bold mb-2">Search Results</h1>
+        <h1 class="text-3xl sm:text-4xl font-bold mb-2">Search Results</h1>
         <p class="text-gray-600">Showing results for: <span class="font-semibold text-gray-800">"{{ $query }}"</span></p>
         <p class="text-sm text-gray-500 mt-2">{{ $news->count() }} {{ $news->count() == 1 ? 'result' : 'results' }} found</p>
     </div>

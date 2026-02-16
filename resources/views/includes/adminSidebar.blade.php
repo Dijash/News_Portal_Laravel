@@ -1,9 +1,9 @@
-<aside class="w-64 bg-white dark:bg-gray-900 shadow-lg hidden md:flex flex-col">
+<aside class="w-full md:w-64 bg-white dark:bg-gray-900 shadow-lg flex flex-col">
     <div class="px-6 py-5 border-b border-gray-200 dark:border-gray-800">
         <h2 class="text-xl font-bold text-red-600">Admin Panel</h2>
     </div>
     
-    <nav class="flex-1 px-4 py-6 space-y-2 text-gray-700 dark:text-gray-300">
+    <nav class="flex-1 px-4 py-4 md:py-6 space-y-2 text-gray-700 dark:text-gray-300">
         <a href="{{ route('admin.dashboard') }}"
            class="flex items-center gap-3 px-4 py-2 rounded-lg transition
                   {{ Request::is('admin') 

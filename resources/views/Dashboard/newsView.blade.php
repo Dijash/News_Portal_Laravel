@@ -3,7 +3,7 @@
 <div class="flex-1 flex flex-col">
 
     <!-- Header -->
-    <header class="bg-white dark:bg-gray-900 shadow px-6 py-4 flex justify-between items-center">
+    <header class="bg-white dark:bg-gray-900 shadow px-4 sm:px-6 py-4 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
         <div>
             <h1 class="text-xl font-bold">News Management</h1>
             <p class="text-sm text-gray-600 dark:text-gray-400">
@@ -18,10 +18,10 @@
     </header>
 
     <!-- Content -->
-    <main class="flex-1 px-6 py-8">
+    <main class="flex-1 px-4 sm:px-6 py-6 sm:py-8">
 
-        <div class="bg-white dark:bg-gray-900 rounded-xl shadow overflow-hidden">
-            <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-800">
+        <div class="bg-white dark:bg-gray-900 rounded-xl shadow overflow-x-auto">
+            <table class="min-w-[720px] w-full divide-y divide-gray-200 dark:divide-gray-800">
 
                 <thead class="bg-gray-50 dark:bg-gray-800">
                     <tr>
@@ -64,7 +64,7 @@
                             @endif
                         </td>
                         <td class="px-6 py-4 text-right text-sm space-x-3">
-                            <div class="flex justify-end gap-2">
+                            <div class="flex flex-wrap justify-end gap-2">
                                 @if(auth()->user()?->is_admin && !$news->is_approved)
                                 <form action="{{ route('admin.news.approve', $news->id) }}" method="POST">
                                     @csrf

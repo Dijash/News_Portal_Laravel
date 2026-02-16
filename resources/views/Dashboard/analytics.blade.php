@@ -1,7 +1,7 @@
 @extends('Layouts.adminApp')
 
 @section('adminContent')
-<main class="flex-1 px-6 py-8 space-y-6">
+<main class="flex-1 px-4 sm:px-6 py-6 sm:py-8 space-y-6">
     <header class="flex items-center justify-between">
         <div>
             <h1 class="text-2xl font-bold">Analytics</h1>
