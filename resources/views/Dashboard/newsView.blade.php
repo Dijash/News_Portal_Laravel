@@ -34,6 +34,9 @@
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">
                             Published At
                         </th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">
+                            Status
+                        </th>
                         <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">
                             Actions
                         </th>
@@ -51,10 +54,32 @@
                             {{ $news->category }}
                         </td>
                         <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400">
-                            {{ $news->created_at->format('M d, Y') }}
+                            {{ $news->published_at ? $news->published_at->format('M d, Y') : '—' }}
+                        </td>
+                        <td class="px-6 py-4 text-sm">
+                            @if($news->is_approved)
+                                <span class="inline-block px-2 py-1 text-xs rounded bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300">Published</span>
+                            @else
+                                <span class="inline-block px-2 py-1 text-xs rounded bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-300">Pending</span>
+                            @endif
                         </td>
                         <td class="px-6 py-4 text-right text-sm space-x-3">
                             <div class="flex justify-end gap-2">
+                                @if(auth()->user()?->is_admin && !$news->is_approved)
+                                <form action="{{ route('admin.news.approve', $news->id) }}" method="POST">
+                                    @csrf
+                                    @method('PATCH')
+                                    <button type="submit" class="inline-flex items-center gap-1 px-3 py-1.5
+                                        rounded-md text-sm font-medium
+                                        bg-green-50 text-green-700
+                                        hover:bg-green-100 hover:text-green-800
+                                        dark:bg-green-900/30 dark:text-green-300
+                                        dark:hover:bg-green-900/50
+                                        transition">
+                                        ✅ Approve
+                                    </button>
+                                </form>
+                                @endif
                                 <!-- Edit Button -->
                                 <a href="{{ route('admin.editNews', $news->id) }}" class="inline-flex items-center gap-1 px-3 py-1.5
                                     rounded-md text-sm font-medium

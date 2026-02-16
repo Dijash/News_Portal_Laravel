@@ -42,7 +42,7 @@
                                 <td class="px-4 py-3">{{ $user->email }}</td>
                                 <td class="px-4 py-3">
                                     <span class="inline-block px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-xs">
-                                        {{ $user->role ?? 'User' }}
+                                        {{ $user->is_admin ? 'Admin' : 'User' }}
                                     </span>
                                 </td>
                                 <td class="px-4 py-3">

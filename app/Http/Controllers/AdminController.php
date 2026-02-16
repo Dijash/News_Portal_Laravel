@@ -15,8 +15,8 @@ class AdminController extends Controller
         {
             // Get statistics
             $totalNews = News::count();
-            $publishedNews = News::count(); // All news are considered published
-            $draftNews = 0; // No draft status in current schema
+            $publishedNews = News::where('is_approved', true)->count();
+            $draftNews = News::where('is_approved', false)->count();
             
             // Get category statistics
             $categoryData = News::select('category', DB::raw('count(*) as count'))
@@ -57,6 +57,8 @@ class AdminController extends Controller
                 $imagePath = $request->file('image')->store('news_images', 'public');
             }
 
+            $isAdmin = Auth::user()?->is_admin === true;
+
             // Create the news article
             News::create([
                 'title' => $validated['title'],
@@ -65,10 +67,15 @@ class AdminController extends Controller
                 'author' => Auth::user()?->name ?? 'Admin', // Use authenticated user or default to 'Admin'
                 'image' => $imagePath,
                 'url' => $validated['url'] ?? null,
-                'published_at' => now(),
+                'published_at' => $isAdmin ? now() : null,
+                'is_approved' => $isAdmin,
             ]);
 
-            return redirect()->route('admin.newsView')->with('success', 'News added successfully!');
+            $message = $isAdmin
+                ? 'News added successfully!'
+                : 'News submitted and pending admin approval.';
+
+            return redirect()->route('admin.newsView')->with('success', $message);
         }
         public function newsView()
         {  
@@ -107,6 +114,20 @@ class AdminController extends Controller
             }
             $news->update($validated);
             return redirect()->route('admin.newsView')->with('success', 'News updated successfully!');
+        }
+        public function approveNews($id)
+        {
+            $news = News::findOrFail($id);
+
+            if ($news->is_approved) {
+                return back()->with('success', 'News already approved.');
+            }
+
+            $news->is_approved = true;
+            $news->published_at = now();
+            $news->save();
+
+            return back()->with('success', 'News approved and published.');
         }
         public function manageUsers()
         {
@@ -153,11 +174,12 @@ class AdminController extends Controller
         {
             $totalNews = News::count();
             $totalUsers = User::count();
-            $publishedNews = News::whereNotNull('published_at')->count();
-            $draftNews = max($totalNews - $publishedNews, 0);
+            $publishedNews = News::where('is_approved', true)->count();
+            $draftNews = News::where('is_approved', false)->count();
 
             $newsByDate = News::selectRaw('DATE(published_at) as date, count(*) as count')
                 ->whereNotNull('published_at')
+                ->where('is_approved', true)
                 ->groupBy('date')
                 ->orderBy('date')
                 ->get();

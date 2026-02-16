@@ -21,14 +21,18 @@ Route::middleware('admin')->group(function () {
     Route::get('/admin/news/{id}/edit', [AdminController::class, 'editNews'])->name('admin.editNews');
     Route::put('/admin/news/{id}', [AdminController::class, 'updateNews'])->name('admin.news.update');
     Route::delete('/admin/news/{id}', [AdminController::class, 'deleteNews'])->name('admin.news.delete');
-    Route::get('/admin/manage-users', [AdminController::class, 'manageUsers'])->name('admin.manageUsers');
-    Route::get('/admin/users/{id}', [AdminController::class, 'showUser'])->name('users.show');
-    Route::delete('/admin/users/{id}', [AdminController::class, 'deleteUser'])->name('users.destroy');
-    Route::patch('/admin/users/{id}/status', [AdminController::class, 'toggleUserStatus'])->name('users.toggleStatus');
     Route::get('/admin/analytics', [AdminController::class, 'analytics'])->name('admin.analytics');
     Route::get('/admin/settings', [AdminController::class, 'settings'])->name('admin.settings');
     Route::patch('/admin/settings/profile', [AdminController::class, 'updateProfile'])->name('admin.settings.profile');
     Route::patch('/admin/settings/password', [AdminController::class, 'updatePassword'])->name('admin.settings.password');
+});
+
+Route::middleware(['admin', 'admin.only'])->group(function () {
+    Route::get('/admin/manage-users', [AdminController::class, 'manageUsers'])->name('admin.manageUsers');
+    Route::get('/admin/users/{id}', [AdminController::class, 'showUser'])->name('users.show');
+    Route::delete('/admin/users/{id}', [AdminController::class, 'deleteUser'])->name('users.destroy');
+    Route::patch('/admin/users/{id}/status', [AdminController::class, 'toggleUserStatus'])->name('users.toggleStatus');
+    Route::patch('/admin/news/{id}/approve', [AdminController::class, 'approveNews'])->name('admin.news.approve');
 });
 
 Route::get('/login', [AuthController::class, 'login'])->name('login');
